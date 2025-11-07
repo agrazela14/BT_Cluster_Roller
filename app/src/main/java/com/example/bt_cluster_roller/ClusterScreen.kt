@@ -74,7 +74,7 @@ fun ClusterScreen(vm: ClusterViewModel = viewModel()) {
         }
 
         // --- Results ---
-        Divider(modifier = Modifier.padding(vertical = 8.dp))
+        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
         Text("Results", style = MaterialTheme.typography.titleMedium)
 
