@@ -49,7 +49,7 @@ class ClusterViewModel : ViewModel() {
         val group = selectedGrouping.intValue
         val mod   = selectedModifier.intValue
 
-        if (dmg == null || clst == null || mod == null ) {
+        if (dmg == null || group == null || mod == null ) {
             _resultText.value = "Error: Please enter valid numbers for all fields. Grouping size cannot be zero."
             return
         }
@@ -95,7 +95,7 @@ class ClusterViewModel : ViewModel() {
 
         // 4. Format and display results
         hitsDict.filter { it.value > 0 }.forEach { (loc, count) ->
-            resultBuilder.appendLine("$count Grouping(s) of $clst dmg to $loc")
+            resultBuilder.appendLine("$count Grouping(s) of $group dmg to $loc")
         }
 
         if (remainderLoc.isNotBlank()) {
