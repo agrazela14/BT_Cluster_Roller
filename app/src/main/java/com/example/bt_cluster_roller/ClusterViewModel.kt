@@ -1,5 +1,6 @@
 package com.example.bt_cluster_roller
 
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,17 +16,20 @@ class ClusterViewModel : ViewModel() {
     // --- UI State ---
 
     // Dropdown options
-    val arcOptions = mapOf("F" to "Front/Rear", "R" to "Right", "L" to "Left")
+    val unitTypeOptions = setOf("Mech", "Quad", "Vehicle")
+    val arcOptions = setOf("Front", "Rear", "Right", "Left")
     val shotCountOptions = Constants.CLUSTER_TABLES_DICT.keys.sorted()
+    val shotDamageOptions = setOf(1, 2, 3, 5, 10, 20)
+    val groupingOptions = setOf(1, 2, 5, 6, 10, 20)
+    val modifierOptions = setOf(-2, 0, 1, 2)
 
     // Selected values from dropdowns
-    var selectedArc = mutableStateOf(arcOptions.keys.first())
-    var selectedShotCount = mutableStateOf(shotCountOptions.first())
-
-    // Text field inputs
-    var damagePerShot = mutableStateOf("1")
-    var groupingSize = mutableStateOf("5")
-    var clusterModifier = mutableStateOf("0")
+    var selectedUnitType = mutableStateOf("Mech")
+    var selectedArc = mutableStateOf("Front")
+    var selectedShotCount  = mutableIntStateOf(10)
+    var selectedShotDamage = mutableIntStateOf(1)
+    var selectedGrouping   = mutableIntStateOf(5)
+    var selectedModifier   = mutableIntStateOf(0)
 
     // Output result text
     private val _resultText = MutableStateFlow("Welcome! Enter values and roll clusters.")
@@ -39,13 +43,13 @@ class ClusterViewModel : ViewModel() {
      */
     fun calculateClusters() {
         // 1. Get and validate inputs
-        val arc = selectedArc.value
-        val shots = selectedShotCount.value
-        val dmg = damagePerShot.value.toIntOrNull()
-        val clst = groupingSize.value.toIntOrNull()
-        val mod = clusterModifier.value.toIntOrNull()
+        val arc   = selectedArc.value
+        val shots = selectedShotCount.intValue
+        val dmg   = selectedShotDamage.intValue
+        val group = selectedGrouping.intValue
+        val mod   = selectedModifier.intValue
 
-        if (dmg == null || clst == null || mod == null || clst == 0) {
+        if (dmg == null || clst == null || mod == null ) {
             _resultText.value = "Error: Please enter valid numbers for all fields. Grouping size cannot be zero."
             return
         }
@@ -76,8 +80,8 @@ class ClusterViewModel : ViewModel() {
             "CT" to 0, "HD" to 0, "TAC" to 0
         )
 
-        val numGroupings = totalDmg / clst
-        val remainderDmg = totalDmg % clst
+        val numGroupings = totalDmg / group
+        val remainderDmg = totalDmg % group
 
         for (i in 1..numGroupings) {
             val hitLoc = rollHitLocation(arc)
@@ -112,15 +116,7 @@ class ClusterViewModel : ViewModel() {
     private fun rollHitLocation(arc: String): String {
         val hitRoll = Random.nextInt(1, 7) + Random.nextInt(1, 7)
 
-        val hitTable = when (arc) {
-            "F" -> Constants.FRONT_HIT_DICT
-            "R" -> Constants.RIGHT_HIT_DICT
-            "L" -> Constants.LEFT_HIT_DICT
-            else -> {
-                // This should not happen given the dropdown
-                return "ERROR_ARC"
-            }
-        }
+        val hitTable = Constants.MASTER_HIT_TABLE_DIRECTORY.getValue(Pair(selectedUnitType.value, selectedArc.value))
 
         return hitTable[hitRoll] ?: "ERROR_ROLL"
     }
