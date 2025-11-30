@@ -7,8 +7,8 @@ package com.example.bt_cluster_roller
  */
 object Constants {
 
-    // Hit Location Dictionaries
-    val FRONT_HIT_DICT: Map<Int, String> = mapOf(
+    // MECH Hit Location Dictionaries
+    val MECH_FRONT_HIT: Map<Int, String> = mapOf(
         2 to "TAC",
         3 to "RA",
         4 to "RA",
@@ -22,7 +22,21 @@ object Constants {
         12 to "HD"
     )
 
-    val RIGHT_HIT_DICT: Map<Int, String> = mapOf(
+    val MECH_REAR_HIT: Map<Int, String> = mapOf(
+        2 to "TAC",
+        3 to "RA",
+        4 to "RA",
+        5 to "RL",
+        6 to "RRT",
+        7 to "RCT",
+        8 to "RLT",
+        9 to "LL",
+        10 to "LA",
+        11 to "LA",
+        12 to "HD"
+    )
+
+    val MECH_RIGHT_HIT: Map<Int, String> = mapOf(
         2 to "TAC",
         3 to "RL",
         4 to "RA",
@@ -36,7 +50,7 @@ object Constants {
         12 to "HD"
     )
 
-    val LEFT_HIT_DICT: Map<Int, String> = mapOf(
+    val MECH_LEFT_HIT: Map<Int, String> = mapOf(
         2 to "TAC",
         3 to "LL",
         4 to "LA",
@@ -50,6 +64,119 @@ object Constants {
         12 to "HD"
     )
 
+    // QUAD Hit Location Dictionaries
+    val QUAD_FRONT_HIT: Map<Int, String> = mapOf(
+        2 to "TAC",
+        3 to "FRL",
+        4 to "FRL",
+        5 to "RRL",
+        6 to "RT",
+        7 to "CT",
+        8 to "LT",
+        9 to "RLL",
+        10 to "FLL",
+        11 to "FLL",
+        12 to "HD"
+    )
+
+    val QUAD_REAR_HIT: Map<Int, String> = mapOf(
+        2 to "TAC",
+        3 to "FRL",
+        4 to "FRL",
+        5 to "RRL",
+        6 to "RRT",
+        7 to "RCT",
+        8 to "RLT",
+        9 to "RLL",
+        10 to "FLL",
+        11 to "FLL",
+        12 to "HD"
+    )
+
+    val QUAD_RIGHT_HIT: Map<Int, String> = mapOf(
+        2 to "TAC",
+        3 to "RRL",
+        4 to "FRL",
+        5 to "FRL",
+        6 to "RRL",
+        7 to "RT",
+        8 to "CT",
+        9 to "LT",
+        10 to "FLL",
+        11 to "RLL",
+        12 to "HD"
+    )
+
+    val QUAD_LEFT_HIT: Map<Int, String> = mapOf(
+        2 to "TAC",
+        3 to "RLL",
+        4 to "FLL",
+        5 to "FLL",
+        6 to "RLL",
+        7 to "LT",
+        8 to "CT",
+        9 to "RT",
+        10 to "FRL",
+        11 to "RRL",
+        12 to "HD"
+    )
+
+    // VEHICLE Hit Location Dictionaries
+    val VEHICLE_FRONT_HIT: Map<Int, String> = mapOf(
+        2 to "FR TAC",
+        3 to "FR MTV",
+        4 to "FR MTV",
+        5 to "RS MTV",
+        6 to "FR",
+        7 to "FR",
+        8 to "FR",
+        9 to "LS MTV",
+        10 to "TUR",
+        11 to "TUR",
+        12 to "TUR TAC"
+    )
+
+    val VEHICLE_REAR_HIT: Map<Int, String> = mapOf(
+        2 to "RR TAC",
+        3 to "RR MTV",
+        4 to "RR MTV",
+        5 to "LS MTV",
+        6 to "RR",
+        7 to "RR",
+        8 to "RR",
+        9 to "RS MTV",
+        10 to "TUR",
+        11 to "TUR",
+        12 to "TUR TAC"
+    )
+
+    val VEHICLE_RIGHT_HIT: Map<Int, String> = mapOf(
+        2 to "RS TAC",
+        3 to "RS MTV",
+        4 to "RS MTV",
+        5 to "FR MTV",
+        6 to "RS",
+        7 to "RS",
+        8 to "RS TAC",
+        9 to "RR MTV",
+        10 to "TUR",
+        11 to "TUR",
+        12 to "TUR TAC"
+    )
+
+    val VEHICLE_LEFT_HIT: Map<Int, String> = mapOf(
+        2 to "LS TAC",
+        3 to "LS MTV",
+        4 to "LS MTV",
+        5 to "FR MTV",
+        6 to "LS",
+        7 to "LS",
+        8 to "LS TAC",
+        9 to "RR MTV",
+        10 to "TUR",
+        11 to "TUR",
+        12 to "TUR TAC"
+    )
     // Cluster Table Dictionaries
     private val TWO_TABLE_DICT: Map<Int, Int> = mapOf(
         2 to 1, 3 to 1, 4 to 1, 5 to 1, 6 to 1, 7 to 1, 8 to 2, 9 to 2, 10 to 2, 11 to 2, 12 to 2
@@ -142,6 +269,21 @@ object Constants {
         2 to 12, 3 to 12, 4 to 18, 5 to 24, 6 to 24, 7 to 24, 8 to 24, 9 to 32, 10 to 32, 11 to 40, 12 to 40
     )
 
+    // Master Dictionary for Mapping The Unit type and Arc to the right Map
+    val MASTER_HIT_TABLE_DIRECTORY: Map<Pair<String, String>, Map<Int, String>> = mapOf(
+        Pair("Mech", "Front")    to MECH_FRONT_HIT,
+        Pair("Mech", "Rear")     to MECH_FRONT_HIT,
+        Pair("Mech", "Right")    to MECH_FRONT_HIT,
+        Pair("Mech", "Left")     to MECH_FRONT_HIT,
+        Pair("Quad", "Front")    to QUAD_FRONT_HIT,
+        Pair("Quad", "Rear")     to QUAD_FRONT_HIT,
+        Pair("Quad", "Right")    to QUAD_FRONT_HIT,
+        Pair("Quad", "Left")     to QUAD_FRONT_HIT,
+        Pair("Vehicle", "Front") to VEHICLE_FRONT_HIT,
+        Pair("Vehicle", "Rear")  to VEHICLE_FRONT_HIT,
+        Pair("Vehicle", "Right") to VEHICLE_FRONT_HIT,
+        Pair("Vehicle", "Left")  to VEHICLE_FRONT_HIT
+    )
     // Master dictionary mapping shot count (key) to its corresponding cluster table
     val CLUSTER_TABLES_DICT: Map<Int, Map<Int, Int>> = mapOf(
         2 to TWO_TABLE_DICT,
