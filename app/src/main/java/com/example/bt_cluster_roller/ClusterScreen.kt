@@ -74,7 +74,7 @@ fun ClusterScreen(vm: ClusterViewModel = viewModel()) {
 
         // Cluster Modifier Dropdown
         DropdownInput(
-            label = "Grouping Size",
+            label = "Cluster Modifier",
             // Convert Int keys to String keys for the display map
             options = vm.modifierOptions,
             selected = vm.selectedModifier.value,
@@ -137,6 +137,7 @@ fun <T> DropdownInput(
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
             modifier = Modifier
+                .menuAnchor()
                 .fillMaxWidth()
         )
         ExposedDropdownMenu(

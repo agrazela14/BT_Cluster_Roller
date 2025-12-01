@@ -272,17 +272,17 @@ object Constants {
     // Master Dictionary for Mapping The Unit type and Arc to the right Map
     val MASTER_HIT_TABLE_DIRECTORY: Map<Pair<String, String>, Map<Int, String>> = mapOf(
         Pair("Mech", "Front")    to MECH_FRONT_HIT,
-        Pair("Mech", "Rear")     to MECH_FRONT_HIT,
-        Pair("Mech", "Right")    to MECH_FRONT_HIT,
-        Pair("Mech", "Left")     to MECH_FRONT_HIT,
+        Pair("Mech", "Rear")     to MECH_REAR_HIT,
+        Pair("Mech", "Right")    to MECH_RIGHT_HIT,
+        Pair("Mech", "Left")     to MECH_LEFT_HIT,
         Pair("Quad", "Front")    to QUAD_FRONT_HIT,
-        Pair("Quad", "Rear")     to QUAD_FRONT_HIT,
-        Pair("Quad", "Right")    to QUAD_FRONT_HIT,
-        Pair("Quad", "Left")     to QUAD_FRONT_HIT,
+        Pair("Quad", "Rear")     to QUAD_REAR_HIT,
+        Pair("Quad", "Right")    to QUAD_RIGHT_HIT,
+        Pair("Quad", "Left")     to QUAD_LEFT_HIT,
         Pair("Vehicle", "Front") to VEHICLE_FRONT_HIT,
-        Pair("Vehicle", "Rear")  to VEHICLE_FRONT_HIT,
-        Pair("Vehicle", "Right") to VEHICLE_FRONT_HIT,
-        Pair("Vehicle", "Left")  to VEHICLE_FRONT_HIT
+        Pair("Vehicle", "Rear")  to VEHICLE_REAR_HIT,
+        Pair("Vehicle", "Right") to VEHICLE_RIGHT_HIT,
+        Pair("Vehicle", "Left")  to VEHICLE_LEFT_HIT
     )
     // Master dictionary mapping shot count (key) to its corresponding cluster table
     val CLUSTER_TABLES_DICT: Map<Int, Map<Int, Int>> = mapOf(
