@@ -18,7 +18,7 @@ class ClusterViewModel : ViewModel() {
     // Dropdown options
     val unitTypeOptions = setOf("Mech", "Quad", "Vehicle")
     val arcOptions = setOf("Front", "Rear", "Right", "Left")
-    val shotCountOptions = Constants.CLUSTER_TABLES_DICT.keys.sorted()
+    val shotCountOptions = Constants.CLUSTER_TABLES_DICT.keys
     val shotDamageOptions = setOf(1, 2, 3, 5, 10, 20)
     val groupingOptions = setOf(1, 2, 5, 6, 10, 20)
     val modifierOptions = setOf(-2, 0, 1, 2)

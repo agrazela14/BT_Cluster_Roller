@@ -29,11 +29,19 @@ fun ClusterScreen(vm: ClusterViewModel = viewModel()) {
 
         // --- Inputs ---
 
-        // Arc Selection Dropdown
+        // Unit Type Dropdown
         DropdownInput(
-            label = "Hitting Arc",
-            optionsMap = vm.arcOptions,
-            selectedKey = vm.selectedArc.value,
+            label             = "Unit Type",
+            options           = vm.unitTypeOptions,
+            selected          = vm.selectedUnitType.value,
+            onSelectionChange = { vm.selectedUnitType.value = it }
+        )
+
+        // Arc Dropdown
+        DropdownInput(
+            label             = "Hitting Arc",
+            options           = vm.arcOptions,
+            selected          = vm.selectedArc.value,
             onSelectionChange = { vm.selectedArc.value = it }
         )
 
@@ -41,28 +49,36 @@ fun ClusterScreen(vm: ClusterViewModel = viewModel()) {
         DropdownInput(
             label = "Shot Count",
             // Convert Int keys to String keys for the display map
-            optionsMap = vm.shotCountOptions.associate { it.toString() to it.toString() },
-            selectedKey = vm.selectedShotCount.value.toString(),
-            onSelectionChange = { vm.selectedShotCount.value = it.toInt() }
+            options = vm.shotCountOptions,
+            selected = vm.selectedShotCount.value,
+            onSelectionChange = { vm.selectedShotCount.value = it }
         )
 
-        // Text Inputs
-        NumberTextField(
-            label = "Damage per Shot",
-            value = vm.damagePerShot.value,
-            onValueChange = { vm.damagePerShot.value = it }
+        // Shot Damage Dropdown
+        DropdownInput(
+            label = "Shot Damage",
+            // Convert Int keys to String keys for the display map
+            options = vm.shotDamageOptions,
+            selected = vm.selectedShotDamage.value,
+            onSelectionChange = { vm.selectedShotDamage.value = it }
         )
 
-        NumberTextField(
+        // Grouping Size Dropdown
+        DropdownInput(
             label = "Grouping Size",
-            value = vm.groupingSize.value,
-            onValueChange = { vm.groupingSize.value = it }
+            // Convert Int keys to String keys for the display map
+            options = vm.groupingOptions,
+            selected = vm.selectedGrouping.value,
+            onSelectionChange = { vm.selectedGrouping.value = it }
         )
 
-        NumberTextField(
-            label = "Cluster Modifier",
-            value = vm.clusterModifier.value,
-            onValueChange = { vm.clusterModifier.value = it }
+        // Cluster Modifier Dropdown
+        DropdownInput(
+            label = "Grouping Size",
+            // Convert Int keys to String keys for the display map
+            options = vm.modifierOptions,
+            selected = vm.selectedModifier.value,
+            onSelectionChange = { vm.selectedModifier.value = it }
         )
 
         // --- Actions ---
@@ -90,42 +106,22 @@ fun ClusterScreen(vm: ClusterViewModel = viewModel()) {
 }
 
 /**
- * A reusable Composable for a labeled text field that only accepts numbers.
- */
-@Composable
-fun NumberTextField(label: String, value: String, onValueChange: (String) -> Unit) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = { newValue ->
-            // Allow only digits or empty string
-            if (newValue.isEmpty() || newValue.matches(Regex("^-?[0-9]*$"))) {
-                onValueChange(newValue)
-            }
-        },
-        label = { Text(label) },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        singleLine = true,
-        modifier = Modifier.fillMaxWidth()
-    )
-}
-
-/**
  * A reusable Composable for a dropdown menu (ExposedDropdownMenuBox).
- * @param optionsMap A Map where the key is the value to be stored (e.g., "F")
+ * @param options A Set of values for the dropdown
  * and the value is the text to be displayed (e.g., "Front/Rear").
- * @param selectedKey The currently selected key.
+ * @param selected The currently selected value.
  * @param onSelectionChange Lambda called when a new key is selected.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> DropdownInput(
     label: String,
-    optionsMap: Map<T, String>,
-    selectedKey: T,
+    options: Set<T>,
+    selected: T,
     onSelectionChange: (T) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val selectedDisplayValue = optionsMap[selectedKey] ?: "Select"
+    val selectedDisplayValue = selected?.toString() ?: "Select"
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -141,18 +137,17 @@ fun <T> DropdownInput(
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
             modifier = Modifier
-                .menuAnchor()
                 .fillMaxWidth()
         )
         ExposedDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            optionsMap.forEach { (key, displayValue) ->
+            options.forEach { value ->
                 DropdownMenuItem(
-                    text = { Text(displayValue) },
+                    text = { Text(value.toString()) },
                     onClick = {
-                        onSelectionChange(key)
+                        onSelectionChange(value)
                         expanded = false
                     }
                 )
