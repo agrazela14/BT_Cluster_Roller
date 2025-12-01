@@ -68,7 +68,7 @@ class ClusterViewModel : ViewModel() {
         val totalDmg = hitCount * dmg
 
         val resultBuilder = StringBuilder()
-        resultBuilder.appendLine("Cluster Roll (2d6 + $mod): $clstRoll -> $clampedRoll")
+        resultBuilder.appendLine("Cluster Roll (2d6 + $mod): $clstRoll Clamped to $clampedRoll")
         resultBuilder.appendLine("Result: $hitCount Hits")
         resultBuilder.appendLine("Total Damage: $totalDmg ($hitCount hits * $dmg dmg/shot)")
         resultBuilder.appendLine("---")
