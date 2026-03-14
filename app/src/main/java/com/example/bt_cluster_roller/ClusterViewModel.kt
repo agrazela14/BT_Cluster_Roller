@@ -83,14 +83,15 @@ class ClusterViewModel : ViewModel() {
         val numGroupings = totalDmg / group
         val remainderDmg = totalDmg % group
 
+        // Replace with some kind of foreach
         for (i in 1..numGroupings) {
-            val hitLoc = rollHitLocation(arc)
+            val hitLoc = rollHitLocation()
             hitsDict[hitLoc] = (hitsDict[hitLoc] ?: 0) + 1
         }
 
         var remainderLoc = ""
         if (remainderDmg > 0) {
-            remainderLoc = rollHitLocation(arc)
+            remainderLoc = rollHitLocation()
         }
 
         // 4. Format and display results
@@ -102,10 +103,11 @@ class ClusterViewModel : ViewModel() {
             resultBuilder.appendLine("$remainderDmg Remaining Damage to $remainderLoc")
         }
 
+        /*
         if (resultBuilder.lines().count() <= 4) {
             resultBuilder.appendLine("No groupings assigned (total damage was less than grouping size).")
         }
-
+        */
         _resultText.value = resultBuilder.toString()
     }
 
@@ -113,7 +115,7 @@ class ClusterViewModel : ViewModel() {
      * Rolls 2d6 and determines the hit location based on the arc.
      * Ported from `roll_hit` in cluster_roller.py
      */
-    private fun rollHitLocation(arc: String): String {
+    private fun rollHitLocation(): String {
         val hitRoll = Random.nextInt(1, 7) + Random.nextInt(1, 7)
 
         val hitTable = Constants.MASTER_HIT_TABLE_DIRECTORY.getValue(Pair(selectedUnitType.value, selectedArc.value))

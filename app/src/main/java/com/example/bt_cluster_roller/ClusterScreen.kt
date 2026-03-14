@@ -2,12 +2,10 @@ package com.example.bt_cluster_roller
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
@@ -31,7 +29,7 @@ fun ClusterScreen(vm: ClusterViewModel = viewModel()) {
 
         // Unit Type Dropdown
         DropdownInput(
-            label             = "Unit Type",
+            label             = "Target Unit Type",
             options           = vm.unitTypeOptions,
             selected          = vm.selectedUnitType.value,
             onSelectionChange = { vm.selectedUnitType.value = it }
@@ -39,7 +37,7 @@ fun ClusterScreen(vm: ClusterViewModel = viewModel()) {
 
         // Arc Dropdown
         DropdownInput(
-            label             = "Hitting Arc",
+            label             = "Damage Location Arc",
             options           = vm.arcOptions,
             selected          = vm.selectedArc.value,
             onSelectionChange = { vm.selectedArc.value = it }
@@ -47,20 +45,20 @@ fun ClusterScreen(vm: ClusterViewModel = viewModel()) {
 
         // Shot Count Dropdown
         DropdownInput(
-            label = "Shot Count",
+            label = "Weapon Size",
             // Convert Int keys to String keys for the display map
             options = vm.shotCountOptions,
-            selected = vm.selectedShotCount.value,
-            onSelectionChange = { vm.selectedShotCount.value = it }
+            selected = vm.selectedShotCount.intValue,
+            onSelectionChange = { vm.selectedShotCount.intValue = it }
         )
 
         // Shot Damage Dropdown
         DropdownInput(
-            label = "Shot Damage",
+            label = "Damage Per Hit",
             // Convert Int keys to String keys for the display map
             options = vm.shotDamageOptions,
-            selected = vm.selectedShotDamage.value,
-            onSelectionChange = { vm.selectedShotDamage.value = it }
+            selected = vm.selectedShotDamage.intValue,
+            onSelectionChange = { vm.selectedShotDamage.intValue = it }
         )
 
         // Grouping Size Dropdown
@@ -68,8 +66,8 @@ fun ClusterScreen(vm: ClusterViewModel = viewModel()) {
             label = "Grouping Size",
             // Convert Int keys to String keys for the display map
             options = vm.groupingOptions,
-            selected = vm.selectedGrouping.value,
-            onSelectionChange = { vm.selectedGrouping.value = it }
+            selected = vm.selectedGrouping.intValue,
+            onSelectionChange = { vm.selectedGrouping.intValue = it }
         )
 
         // Cluster Modifier Dropdown
@@ -77,8 +75,8 @@ fun ClusterScreen(vm: ClusterViewModel = viewModel()) {
             label = "Cluster Modifier",
             // Convert Int keys to String keys for the display map
             options = vm.modifierOptions,
-            selected = vm.selectedModifier.value,
-            onSelectionChange = { vm.selectedModifier.value = it }
+            selected = vm.selectedModifier.intValue,
+            onSelectionChange = { vm.selectedModifier.intValue = it }
         )
 
         // --- Actions ---
