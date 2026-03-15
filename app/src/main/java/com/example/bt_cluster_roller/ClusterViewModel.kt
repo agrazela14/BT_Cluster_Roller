@@ -43,16 +43,10 @@ class ClusterViewModel : ViewModel() {
      */
     fun calculateClusters() {
         // 1. Get and validate inputs
-        val arc   = selectedArc.value
         val shots = selectedShotCount.intValue
         val dmg   = selectedShotDamage.intValue
         val group = selectedGrouping.intValue
         val mod   = selectedModifier.intValue
-
-        if (dmg == null || group == null || mod == null ) {
-            _resultText.value = "Error: Please enter valid numbers for all fields. Grouping size cannot be zero."
-            return
-        }
 
         // 2. Roll for cluster hits
         val clstRoll = Random.nextInt(1, 7) + Random.nextInt(1, 7) + mod
@@ -83,7 +77,6 @@ class ClusterViewModel : ViewModel() {
         val numGroupings = totalDmg / group
         val remainderDmg = totalDmg % group
 
-        // Replace with some kind of foreach
         for (i in 1..numGroupings) {
             val hitLoc = rollHitLocation()
             hitsDict[hitLoc] = (hitsDict[hitLoc] ?: 0) + 1
