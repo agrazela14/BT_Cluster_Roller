@@ -23,7 +23,7 @@ fun ClusterScreen(vm: ClusterViewModel = viewModel()) {
             .verticalScroll(rememberScrollState()), // Make column scrollable
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Text("Cluster Roller", style = MaterialTheme.typography.headlineMedium)
+        Text("BattleTech Cluster Roller", style = MaterialTheme.typography.headlineMedium)
 
         // --- Inputs ---
 
