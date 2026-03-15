@@ -77,7 +77,7 @@ class ClusterViewModel : ViewModel() {
         val numGroupings = totalDmg / group
         val remainderDmg = totalDmg % group
 
-        for (i in 1..numGroupings) {
+        repeat(numGroupings) {
             val hitLoc = rollHitLocation()
             hitsDict[hitLoc] = (hitsDict[hitLoc] ?: 0) + 1
         }
