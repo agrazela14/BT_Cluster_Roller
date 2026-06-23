@@ -132,10 +132,6 @@ fun <T> CR_Checkbox(
 
         )
     }
-
-    Text(
-        if (checked) "Checkbox is checked" else "Checkbox is unchecked"
-    )
 }
 
 /**
