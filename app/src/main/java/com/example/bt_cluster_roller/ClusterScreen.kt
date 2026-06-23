@@ -5,6 +5,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -70,6 +71,12 @@ fun ClusterScreen(vm: ClusterViewModel = viewModel()) {
             onSelectionChange = { vm.selectedGrouping.intValue = it }
         )
 
+        // Streak Checkbox
+        CR_Checkbox(
+            label = "Streak Capable",
+            selection = vm.selectedStreak.value,
+            onSelectionChange = { vm.selectedStreak.value = !(vm.selectedStreak.value) }
+        )
         // Cluster Modifier Dropdown
         DropdownInput(
             label = "Cluster Modifier",
@@ -101,6 +108,34 @@ fun ClusterScreen(vm: ClusterViewModel = viewModel()) {
                 .defaultMinSize(minHeight = 150.dp)
         )
     }
+}
+
+
+@Composable
+fun <T> CR_Checkbox(
+    label:String,
+    selection: T,
+    onSelectionChange: (T) -> Unit
+) {
+    var checked by remember { mutableStateOf(false) }
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            label
+        )
+        Checkbox(
+            checked = checked,
+            onCheckedChange = { checked = it
+                                onSelectionChange(selection)}
+
+        )
+    }
+
+    Text(
+        if (checked) "Checkbox is checked" else "Checkbox is unchecked"
+    )
 }
 
 /**

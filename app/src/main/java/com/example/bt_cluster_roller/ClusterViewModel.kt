@@ -21,7 +21,7 @@ class ClusterViewModel : ViewModel() {
     val shotCountOptions = Constants.CLUSTER_TABLES_DICT.keys
     val shotDamageOptions = setOf(1, 2, 3, 5, 10, 20)
     val groupingOptions = setOf(1, 2, 5, 6, 10, 20)
-    val modifierOptions = setOf(-2, 0, 1, 2)
+    val modifierOptions = setOf(-4, -2, 0, 1, 2)
 
     // Selected values from dropdowns
     var selectedUnitType = mutableStateOf("Mech")
@@ -29,6 +29,7 @@ class ClusterViewModel : ViewModel() {
     var selectedShotCount  = mutableIntStateOf(10)
     var selectedShotDamage = mutableIntStateOf(1)
     var selectedGrouping   = mutableIntStateOf(5)
+    var selectedStreak     = mutableStateOf( false )
     var selectedModifier   = mutableIntStateOf(0)
 
     // Output result text
@@ -49,7 +50,7 @@ class ClusterViewModel : ViewModel() {
         val mod   = selectedModifier.intValue
 
         // 2. Roll for cluster hits
-        val clstRoll = Random.nextInt(1, 7) + Random.nextInt(1, 7) + mod
+        val clstRoll = if (selectedStreak.value) 11 + mod else (Random.nextInt(1, 7) + Random.nextInt(1, 7)) + mod
         val clampedRoll = clstRoll.coerceIn(2, 12) // Clamp roll between 2 and 12
 
         val clusterTable = Constants.CLUSTER_TABLES_DICT[shots]
@@ -62,7 +63,11 @@ class ClusterViewModel : ViewModel() {
         val totalDmg = hitCount * dmg
 
         val resultBuilder = StringBuilder()
-        resultBuilder.appendLine("Cluster Roll (2d6 + $mod): $clstRoll Clamped to $clampedRoll")
+        if (selectedStreak.value) {
+            resultBuilder.appendLine(value = "Streak System Active, Cluster roll set to 11 + $mod")
+        } else {
+            resultBuilder.appendLine("Cluster Roll (2d6 + $mod): $clstRoll Clamped to $clampedRoll")
+        }
         resultBuilder.appendLine("Result: $hitCount Hits")
         resultBuilder.appendLine("Total Damage: $totalDmg ($hitCount hits * $dmg dmg/shot)")
         resultBuilder.appendLine("---")
