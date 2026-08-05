@@ -66,7 +66,10 @@ class ClusterViewModel : ViewModel() {
         if (selectedStreak.value) {
             resultBuilder.appendLine(value = "Streak System Active, Cluster roll set to 11 + $mod")
         } else {
-            resultBuilder.appendLine("Cluster Roll (2d6 + $mod): $clstRoll Clamped to $clampedRoll")
+            resultBuilder.appendLine("Cluster Roll (2d6 + $mod): $clstRoll")
+            if ((clstRoll > 12) || (clstRoll < 2)) {
+                resultBuilder.appendLine("Clamped roll to $clampedRoll")
+            }
         }
         resultBuilder.appendLine("Result: $hitCount Hits")
         resultBuilder.appendLine("Total Damage: $totalDmg ($hitCount hits * $dmg dmg/shot)")
