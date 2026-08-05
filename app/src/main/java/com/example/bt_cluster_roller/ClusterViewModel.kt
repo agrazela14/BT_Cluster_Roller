@@ -85,6 +85,7 @@ class ClusterViewModel : ViewModel() {
         repeat(numGroupings) {
             val hitLoc = rollHitLocation()
             hitsDict[hitLoc] = (hitsDict[hitLoc] ?: 0) + 1
+            resultBuilder.appendLine("Grouping of $group dmg to $hitLoc")
         }
 
         var remainderLoc = ""
@@ -93,9 +94,14 @@ class ClusterViewModel : ViewModel() {
         }
 
         // 4. Format and display results
+        // Clusters should technically be resolved in rolled order
+        // Consider reapplying this 'compressed' formatting as an option later
+
+        /*
         hitsDict.filter { it.value > 0 }.forEach { (loc, count) ->
             resultBuilder.appendLine("$count Grouping(s) of $group dmg to $loc")
         }
+        */
 
         if (remainderLoc.isNotBlank()) {
             resultBuilder.appendLine("$remainderDmg Remaining Damage to $remainderLoc")
@@ -116,7 +122,8 @@ class ClusterViewModel : ViewModel() {
     private fun rollHitLocation(): String {
         val hitRoll = Random.nextInt(1, 7) + Random.nextInt(1, 7)
 
-        val hitTable = Constants.MASTER_HIT_TABLE_DIRECTORY.getValue(Pair(selectedUnitType.value, selectedArc.value))
+        val hitTable = Constants.MASTER_HIT_TABLE_DIRECTORY
+            .getValue(Pair(selectedUnitType.value, selectedArc.value))
 
         return hitTable[hitRoll] ?: "ERROR_ROLL"
     }
